@@ -33,19 +33,19 @@ def sort_and_count_inversion(input_list):
         right = input_list[len(input_list) // 2 : len(input_list)]
 
         # recursively sort and count left inversion
-        left_inversion = sort_and_count_inversion(left)
+        (sorted_left, left_inversion) = sort_and_count_inversion(left)
 
         # recursively sort and count right inversion
-        right_inversion = sort_and_count_inversion(right)
+        (sorted_right, right_inversion) = sort_and_count_inversion(right)
 
         # merge and count split inversion
-        split_inversion = merge_and_count_split_inversion(
-            left_inversion[0], right_inversion[0]
+        (sorted_all, split_inversion) = merge_and_count_split_inversion(
+            sorted_left, sorted_right
         )
 
         return (
-            split_inversion[0],
-            left_inversion[1] + right_inversion[1] + split_inversion[1],
+            sorted_all,  # sorted list
+            left_inversion + right_inversion + split_inversion,  # number of inversion
         )
 
 
@@ -62,3 +62,14 @@ def test_split_inversion():
         [1, 2, 3, 4, 5, 6],
         3,
     )
+
+
+def test_count_inversion_in_file():
+    # read file
+    with open("../data/IntegerArray.txt", "r") as f:
+        input_list = f.read().splitlines()
+    # convert all str into int
+    input_list = [int(x) for x in input_list]
+
+    # count inversion
+    assert sort_and_count_inversion(input_list)[1] == 2407905288
