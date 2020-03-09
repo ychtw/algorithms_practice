@@ -8,6 +8,8 @@ For example:
 - octal number (base 8)
 - hexadecimal number (base 16)
 
+Practice question from "Problem Solving with Algorithms and Data
+    Structures using Python (Chapter 4.8)"
 """
 from stack import Stack
 
